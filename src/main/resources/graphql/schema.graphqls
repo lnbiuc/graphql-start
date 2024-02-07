@@ -6,6 +6,8 @@ type Query {
     author(id: String): Author
 }
 
+
+
 type Author {
     id: String
     firstName: String
@@ -24,4 +26,17 @@ type Tag {
     id: String
     name: String
     description: String
+}
+
+type Mutation {
+    createArticle(article: ArticleInput!): Article
+    deleteArticle(id: String!): Boolean
+    updateArticle(id: String!, article: ArticleInput!): Article
+}
+
+input ArticleInput {
+    title: String
+    content: String
+    authorId: String
+    tagId: String
 }

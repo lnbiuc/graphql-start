@@ -1,9 +1,8 @@
 package vin.vio.graphqlstart.repository;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
-import vin.vio.graphqlstart.model.Article;
-import vin.vio.graphqlstart.model.Author;
-import vin.vio.graphqlstart.model.Tag;
+import vin.vio.graphqlstart.model.*;
 
 import java.util.*;
 
@@ -14,9 +13,9 @@ import java.util.*;
  */
 
 @Repository
-public class ArticleDBRepository
+public class DBRepository
 {
-    private final List<Article> articles = Arrays.asList(
+    private List<Article> articles = Arrays.asList(
             new Article("1", "title1", "content1", "author-1", "1"),
             new Article("2", "title2", "content2", "author-2", "2"),
             new Article("3", "title3", "content3", "author-3", "3"),
@@ -24,7 +23,7 @@ public class ArticleDBRepository
             new Article("5", "title5", "content5", "author-2", "5")
     );
 
-    private final Map<String, List<Tag>> tags = new HashMap<>() {{
+    private Map<String, List<Tag>> tags = new HashMap<>() {{
         put("1", List.of(new Tag("1", "Java", "Java related articles"), new Tag("2", "Python", "Python related articles"), new Tag("1", "Java", "Java related articles")));
         put("2", List.of(new Tag("2", "Python", "Python related articles"), new Tag("3", "JavaScript", "JavaScript related articles")));
         put("3", List.of(new Tag("3", "JavaScript", "JavaScript related articles")));
@@ -32,7 +31,7 @@ public class ArticleDBRepository
         put("5", List.of(new Tag("5", "Go", "Go related articles")));
     }};
 
-    private final List<Author> authors = Arrays.asList(
+    private List<Author> authors = Arrays.asList(
             new Author("author-1", "Joshua", "Bloch"),
             new Author("author-2", "Douglas", "Adams"),
             new Author("author-3", "Bill", "Bryson")
@@ -59,5 +58,13 @@ public class ArticleDBRepository
                 .filter(author -> author.id().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Article saveArticle(ArticleInput articleInput)
+    {
+        Article article = new Article(articles.size() + "", articleInput.title(), articleInput.content(), articleInput.authorId(), articleInput.tagId());
+//        articles.add(article);
+        System.out.println(article);
+        return article;
     }
 }

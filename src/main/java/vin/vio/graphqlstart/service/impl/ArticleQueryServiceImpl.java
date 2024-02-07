@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import vin.vio.graphqlstart.model.Article;
 import vin.vio.graphqlstart.model.Author;
 import vin.vio.graphqlstart.model.Tag;
-import vin.vio.graphqlstart.repository.ArticleDBRepository;
+import vin.vio.graphqlstart.repository.DBRepository;
 import vin.vio.graphqlstart.service.ArticleQueryService;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ArticleQueryServiceImpl implements ArticleQueryService
 {
     @Autowired
-    private ArticleDBRepository repository;
+    private DBRepository repository;
 
     @Override
     public List<Article> listArticles()

@@ -1,12 +1,13 @@
 package vin.vio.graphqlstart.handler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import vin.vio.graphqlstart.model.Article;
-import vin.vio.graphqlstart.model.Author;
-import vin.vio.graphqlstart.model.Tag;
+import vin.vio.graphqlstart.model.*;
+import vin.vio.graphqlstart.service.ArticleCreateService;
 import vin.vio.graphqlstart.service.ArticleQueryService;
 
 import java.util.Collection;
@@ -22,9 +23,12 @@ public class ArticleHandler
 {
     private final ArticleQueryService queryService;
 
-    public ArticleHandler(ArticleQueryService queryService)
+    private final ArticleCreateService createService;
+
+    public ArticleHandler(ArticleQueryService queryService, ArticleCreateService createService)
     {
         this.queryService = queryService;
+        this.createService = createService;
     }
 
     @QueryMapping
@@ -48,5 +52,10 @@ public class ArticleHandler
     public Author author(Article article)
     {
         return queryService.getAuthorByAuthorId(article.authorId());
+    }
+
+    @MutationMapping
+    public Article createArticle(@Argument("article") ArticleInput article) {
+        return createService.createArticle(article);
     }
 }
